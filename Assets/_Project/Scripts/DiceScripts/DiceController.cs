@@ -11,7 +11,7 @@ namespace _Project.Scripts.DiceScripts
 {
     public class DiceController : MonoBehaviour
     {
-        private readonly Vector3 _startPos = new Vector3(0, 10f, -10f);
+        private readonly Vector3 _startPos = new Vector3(10, .3f, -7.5f);
 
         [SerializeField] private ClampVal _randomX;
         [SerializeField] private ClampVal _randomZ;
@@ -33,12 +33,13 @@ namespace _Project.Scripts.DiceScripts
             var randomRotation = new Vector3(Random.Range(-360f, 360f), Random.Range(-360f, 360f),
                 Random.Range(-360f, 360f));
             transform.rotation = Quaternion.Euler(randomRotation);
-            var randomEndTarget = new Vector3(_randomX.RandomValue, 0, _randomZ.RandomValue);
+            var randomEndTarget = new Vector3(_randomX.RandomValue, 0.15f, _randomZ.RandomValue);
             var pathList = LeonsExtensions.LeonsMath.ParabolaPoints(transform.position, randomEndTarget, 5f);
 
-            transform.DOPath(pathList.ToArray(), .75f);
+            transform.DOPath(pathList.ToArray(), .5f);
 
-            transform.DORotate(Vector3.zero, 1f);
+            transform.DORotate(Vector3.zero, Random.Range(.5f,.75f));
+
         }
     }
 }
