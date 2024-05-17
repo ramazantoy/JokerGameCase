@@ -34,6 +34,29 @@ namespace _Project.Scripts.LeonsExtensions
 
             return final;
         }
+        
+        public static List<Vector3> ParabolaPoints(Vector3 startPoint , Vector3 endPoint , float height , int resolution = 100)
+        {
+            List<Vector3> points = new List<Vector3>();
+
+            for (int i = 1; i <= resolution; i++)
+            {
+                points.Add(ParabolaPoint(startPoint, endPoint, height, (float)i / (float)resolution));
+            }
+
+            return points;
+        }
+
+        public static Vector3 ParabolaPoint(Vector3 startPoint, Vector3 endPoint, float height, float t)
+        {
+            Func<float, float> f = x => -4 * height * x * x + 4 * height * x;
+
+            Vector3 mid = Vector3.Lerp(startPoint, endPoint, t);
+
+            return new Vector3(mid.x, f(t) + Mathf.Lerp(startPoint.y, endPoint.y, t), mid.z);
+        }
+        
+
 
         public static List<Vector2> GenerateRandomPointsOnCircle(RectTransform center, float pointRadius, int count)
         {
