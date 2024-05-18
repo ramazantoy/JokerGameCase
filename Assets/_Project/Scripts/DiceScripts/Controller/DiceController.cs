@@ -9,16 +9,13 @@ namespace _Project.Scripts.DiceScripts.Controller
 {
     public class DiceController : MonoBehaviour
     {
-        [SerializeField] private DiceControllerData _properties;
+        [SerializeField] 
+        private DiceControllerData _properties;
 
-        [SerializeField] [Range(1, 6)] private int _wantNumber;
 
-        private void Update()
+        private void OnEnable()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                RollDice(_wantNumber);
-            }
+            
         }
 
         private void RollDice(int number)
