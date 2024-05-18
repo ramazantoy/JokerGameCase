@@ -5,10 +5,9 @@ using UnityEngine;
 namespace _Project.Scripts.DiceScripts.Controller
 {
     [System.Serializable]
-    public struct DiceControllerData
+    public struct DiceData
     {
         public Animator DiceAnimator;
-        public DiceDataContainer DiceDataContainer;
         public List<DiceFace> DiceFaces;
     }
 }

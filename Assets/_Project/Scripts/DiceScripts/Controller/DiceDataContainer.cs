@@ -10,10 +10,33 @@ namespace _Project.Scripts.DiceScripts.Controller
     {
         [SerializeField]
         private List<FaceIndexData> _faceIndexData;
+        
+        private Queue<FaceIndexData> _shuffledFaces;
 
         public FaceIndexData GetRandomFace()
         {
-            return _faceIndexData.GetRandom();
+            if (_shuffledFaces == null || _shuffledFaces.Count == 0)
+            {
+                ShuffleFaces();
+            }
+
+            return _shuffledFaces.Dequeue();
+        }
+
+        private void ShuffleFaces()
+        {
+            List<FaceIndexData> shuffledList = new List<FaceIndexData>(_faceIndexData);
+            int count = shuffledList.Count;
+            while (count > 1)
+            {
+                count--;
+                int index = Random.Range(0, count + 1);
+                FaceIndexData temp = shuffledList[index];
+                shuffledList[index] = shuffledList[count];
+                shuffledList[count] = temp;
+            }
+            
+            _shuffledFaces = new Queue<FaceIndexData>(shuffledList);
         }
     }
 

@@ -6,68 +6,55 @@ namespace _Project.Scripts.Events
     public  class EventBus 
     {
         private static EventBus _instance;
-        private Dictionary<Type, List<Action<object>>> _eventListeners = new Dictionary<Type, List<Action<object>>>();
+        private Dictionary<EventType, Delegate> _eventListeners = new Dictionary<EventType, Delegate>();
 
-        private EventBus() { }
-        
-        public static EventBus Instance
+        private EventBus () { }
+
+        public static EventBus  Instance
         {
-            get { return _instance ??= new EventBus(); }
+            get { return _instance ??= new EventBus (); }
         }
-        public void AddListener<T>(Action<T> listener) where T : class
+
+        public void AddListener<T1,T2>(EventType eventType, Action<T1,T2> listener)
         {
-            var eventType = typeof(T);
             if (!_eventListeners.ContainsKey(eventType))
             {
-                _eventListeners[eventType] = new List<Action<object>>();
+                _eventListeners[eventType] = null;
             }
-            _eventListeners[eventType].Add((obj) => listener(obj as T));
+            _eventListeners[eventType] = (Action<T1,T2>)_eventListeners[eventType] + listener;
         }
         
-        public void AddListener(Action listener)
+        public void AddListener<T>(EventType eventType, Action<T> listener)
         {
-            var eventType = typeof(Action);
             if (!_eventListeners.ContainsKey(eventType))
             {
-                _eventListeners[eventType] = new List<Action<object>>();
+                _eventListeners[eventType] = null;
             }
-            _eventListeners[eventType].Add((obj) => listener());
+            _eventListeners[eventType] = (Action<T>)_eventListeners[eventType] + listener;
         }
         
-        public void RemoveListener<T>(Action<T> listener) where T : class
+        public void AddListener(EventType eventType, Action listener)
         {
-            var eventType = typeof(T);
+            if (!_eventListeners.ContainsKey(eventType))
+            {
+                _eventListeners[eventType] = null;
+            }
+            _eventListeners[eventType] = (Action)_eventListeners[eventType] + listener;
+        }
+
+        public void RemoveListener<T>(EventType eventType, Action<T> listener)
+        {
             if (_eventListeners.ContainsKey(eventType))
             {
-                _eventListeners[eventType].Remove((obj) => listener(obj as T));
+                _eventListeners[eventType] = (Action<T>)_eventListeners[eventType] - listener;
             }
         }
-        
-        public void RemoveListener(Action listener)
+
+        public void TriggerEvent<T>(EventType eventType, T eventData)
         {
-            var eventType = typeof(Action);
             if (_eventListeners.ContainsKey(eventType))
             {
-                _eventListeners[eventType].Remove((obj) => listener());
-            }
-        }
-        
-        public void Publish<T>(T eventData) where T : class
-        {
-            var eventType = typeof(T);
-            if (!_eventListeners.ContainsKey(eventType)) return;
-            foreach (var listener in _eventListeners[eventType])
-            {
-                listener?.Invoke(eventData);
-            }
-        }
-        
-        public void Publish(Type eventType)
-        {
-            if (!_eventListeners.ContainsKey(eventType)) return;
-            foreach (var listener in _eventListeners[eventType])
-            {
-                listener?.Invoke(null);
+                ((Action<T>)_eventListeners[eventType])?.Invoke(eventData);
             }
         }
     }

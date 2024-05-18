@@ -1,31 +1,22 @@
-using System;
 using System.Collections.Generic;
 using _Project.Scripts.DiceScripts.Face;
-using _Project.Scripts.LeonsExtensions;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.DiceScripts.Controller
 {
-    public class DiceController : MonoBehaviour
+    public class Dice : MonoBehaviour
     {
         [SerializeField] 
-        private DiceControllerData _properties;
-
-
-        private void OnEnable()
-        {
-            
-        }
-
-        private void RollDice(int number)
+        private DiceData _properties;
+        
+        public void RollDice(int number, FaceIndexData faceIndex)
         {
             List<int> numbers = new() { 1, 2, 3, 4, 5, 6 };
 
 
             int[] oppositeIndices = { 5, 2, 1, 4, 3, 0 };
 
-            var faceIndexData = _properties.DiceDataContainer.GetRandomFace();
+            var faceIndexData = faceIndex;
 
             _properties.DiceFaces[faceIndexData.FaceIndex].SetFaceNumber(number);
             _properties.DiceFaces[oppositeIndices[faceIndexData.FaceIndex]].SetFaceNumber(7 - number);

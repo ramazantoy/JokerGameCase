@@ -23,8 +23,6 @@ MonoBehaviour:
     FaceIndex: 1
   - AnimName: Roll_5
     FaceIndex: 3
-  - AnimName: Roll_5
-    FaceIndex: 3
   - AnimName: Roll_6
     FaceIndex: 1
   - AnimName: Roll_7
