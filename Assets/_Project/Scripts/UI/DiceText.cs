@@ -16,9 +16,7 @@ namespace _Project.Scripts.UI
 
         private void OnInputValueChanged()
         {
-            int value;
-            
-            if (!int.TryParse(_inputField.text, out value) || value < 1 || value > 6)
+            if (!int.TryParse(_inputField.text, out var value) || value is < 1 or > 6)
             {
                 _inputField.text = "1";
             }
