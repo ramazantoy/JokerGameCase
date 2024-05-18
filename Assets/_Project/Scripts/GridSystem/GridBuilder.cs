@@ -22,7 +22,7 @@ namespace _Project.Scripts.GridSystem
 
         private void Start()
         {
-            StartCoroutine(BuildTiles());
+         //   StartCoroutine(BuildTiles());
         }
 
         public void BuildSquare()
