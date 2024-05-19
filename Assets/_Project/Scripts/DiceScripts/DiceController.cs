@@ -34,5 +34,6 @@ namespace _Project.Scripts.DiceScripts
             _diceObjects[0].RollDice(rollDiceEvent.Number1, _diceDataContainer.GetRandomFace());
             _diceObjects[1].RollDice(rollDiceEvent.Number2, _diceDataContainer.GetRandomFace());
         }
+        
     }
 }

@@ -9,12 +9,21 @@ namespace _Project.Scripts.Events.EventBusScripts
     {
         private static readonly HashSet<IEventBinding<T>> _bindings = new HashSet<IEventBinding<T>>();
 
+
+        public static void Subscribe(EventBinding<T> binding)
+        {
         
-        public static void Subscribe(EventBinding<T> binding) => _bindings.Add(binding);
-        public static void Unsubscribe(EventBinding<T> binding) => _bindings.Remove(binding);
+            _bindings.Add(binding);
+        }
+
+        public static void Unsubscribe(EventBinding<T> binding)
+        {
+            _bindings.Remove(binding);
+        }
         
         public static void Publish(T eventToRaise)
         {
+    
             foreach(var binding in _bindings)
             {
                 binding.OnEvent.Invoke(eventToRaise);

@@ -18,7 +18,7 @@ namespace _Project.Scripts.UI
         {
             if (!int.TryParse(_inputField.text, out var value) || value is < 1 or > 6)
             {
-                _inputField.text = "1";
+                _inputField.text = "";
             }
         }
         
