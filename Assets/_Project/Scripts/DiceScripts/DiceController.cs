@@ -1,5 +1,8 @@
+using System;
 using _Project.Scripts.DiceScripts.Controller;
 using _Project.Scripts.Events;
+using _Project.Scripts.Events.EventBusScripts;
+using _Project.Scripts.Events.GameEvents;
 using UnityEngine;
 
 namespace _Project.Scripts.DiceScripts
@@ -9,16 +12,27 @@ namespace _Project.Scripts.DiceScripts
         [SerializeField] private DiceDataContainer _diceDataContainer;
         [SerializeField] private Dice[] _diceObjects;
 
+        private EventBinding<RollDiceEvent> _rollDiceEvent;
+
+   
+
         private void OnEnable()
         {
-            EventBus.OnRollDices += OnRollDices;
+           _rollDiceEvent = new EventBinding<RollDiceEvent>(OnRollDices);
+           
+           EventBus<RollDiceEvent>.Subscribe(_rollDiceEvent);
+
+        }
+        
+        private void OnDisable()
+        {
+            EventBus<RollDiceEvent>.Unsubscribe(_rollDiceEvent);
         }
 
-
-        private void OnRollDices(int num1, int num2)
+        private void OnRollDices(RollDiceEvent rollDiceEvent)
         {
-            _diceObjects[0].RollDice(num1, _diceDataContainer.GetRandomFace());
-            _diceObjects[1].RollDice(num2, _diceDataContainer.GetRandomFace());
+            _diceObjects[0].RollDice(rollDiceEvent.Number1, _diceDataContainer.GetRandomFace());
+            _diceObjects[1].RollDice(rollDiceEvent.Number2, _diceDataContainer.GetRandomFace());
         }
     }
 }
