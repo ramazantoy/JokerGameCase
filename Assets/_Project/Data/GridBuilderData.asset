@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fee43e1f1be9c3429b22f1281bf85fa, type: 3}
+  m_Name: GridBuilderData
+  m_EditorClassIdentifier: 
+  RoadTilePref: {fileID: 4026981009587757016, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+  EnvTilePref: {fileID: 2519104919608898554, guid: ddbf230c4d73bbc4289c89be5534ed9b, type: 3}
+  RowColCount: 10
+  StartPos: {x: 0, y: 0, z: -8}
+  TileSpacing: 1.1
+  RoadStartOffset: 1

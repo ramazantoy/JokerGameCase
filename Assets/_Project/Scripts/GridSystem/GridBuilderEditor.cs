@@ -13,7 +13,7 @@ namespace _Project.Scripts.GridSystem
             if (GUILayout.Button("Build"))
             {
                 var gridBuilder = (GridBuilder)target;
-                gridBuilder.BuildSquare();
+                gridBuilder.BuildMapOnEditor();
             }
             
             if (GUILayout.Button("RemoveTiles"))
