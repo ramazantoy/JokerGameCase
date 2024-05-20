@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Project.Scripts.Events.EventBusScripts;
+using _Project.Scripts.Events.GameEvents;
 using _Project.Scripts.GridSystem.Tile;
 using DG.Tweening;
 using UnityEditor;
@@ -47,6 +49,8 @@ namespace _Project.Scripts.GridSystem
                 tileBase.StartAnim(.1f);
                 yield return new WaitForSeconds(.025f);
             }
+            
+            EventBus<OnBoardReady>.Publish(new OnBoardReady());
             
         }
 
