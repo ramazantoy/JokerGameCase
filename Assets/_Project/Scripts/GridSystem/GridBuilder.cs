@@ -5,6 +5,7 @@ using _Project.Scripts.Events.EventBusScripts;
 using _Project.Scripts.Events.GameEvents;
 using _Project.Scripts.Funcs;
 using _Project.Scripts.GridSystem.Tile;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
@@ -30,13 +31,13 @@ namespace _Project.Scripts.GridSystem
         private void OnEnable()
         {
             GameFuncs.GetMovementTiles += GetMovementTiles;
-            GameFuncs.GetRoadPos += GetRoadPos;
+            GameFuncs.GetRoadTile += GetRoadTile;
         }
 
         private void OnDisable()
         {
             GameFuncs.GetMovementTiles -= GetMovementTiles;
-            GameFuncs.GetRoadPos -= GetRoadPos;
+            GameFuncs.GetRoadTile -= GetRoadTile;
         }
 
         private void Start()
@@ -50,11 +51,11 @@ namespace _Project.Scripts.GridSystem
             {
                 _roadTiles[i].TileIndex = i ;
             }
-
-            StartCoroutine(StartAnim());
+            
+            StartAnim().Forget();
         }
 
-        private IEnumerator StartAnim()
+        private async UniTaskVoid StartAnim()
         {
             var childList = new List<TileBase>(transform.GetComponentsInChildren<TileBase>());
             
@@ -66,7 +67,7 @@ namespace _Project.Scripts.GridSystem
             foreach (var tileBase in childList)
             {
                 tileBase.StartAnim(.1f);
-                yield return new WaitForSeconds(.025f);
+                await UniTask.WaitForSeconds(.025f);
             }
             
             EventBus<OnBoardReadyEvent>.Publish(new OnBoardReadyEvent());
@@ -181,10 +182,10 @@ namespace _Project.Scripts.GridSystem
             return roadList;
         }
 
-        private Vector3 GetRoadPos(int index)
+        private RoadTile GetRoadTile(int index)
         {
             index = index % _roadTiles.Count;
-            return _roadTiles[index].transform.position;
+            return _roadTiles[index];
         }
 
 

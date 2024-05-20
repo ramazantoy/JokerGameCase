@@ -9711,6 +9711,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartScale: {x: 1, y: 0.2, z: 1}
+  _tileParticle: {fileID: 2869378499596582931}
   TileText: {fileID: 1645603059330816873}
 --- !u!1 &7244893152516340095
 GameObject:

@@ -8,6 +8,6 @@ namespace _Project.Scripts.Funcs
     public class GameFuncs
     {
         public static Func<int, int, List<RoadTile>> GetMovementTiles;
-        public static Func<int, Vector3> GetRoadPos;
+        public static Func<int, RoadTile> GetRoadTile;
     }
 }

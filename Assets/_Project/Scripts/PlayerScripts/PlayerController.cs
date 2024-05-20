@@ -6,6 +6,7 @@ using _Project.Scripts.Events.EventBusScripts;
 using _Project.Scripts.Events.GameEvents;
 using _Project.Scripts.Funcs;
 using _Project.Scripts.GridSystem.Tile;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -46,7 +47,7 @@ namespace _Project.Scripts.PlayerScripts
 
         private void Start()
         {
-            StartCoroutine(Movement());
+          Movement().Forget();
         }
 
 
@@ -62,11 +63,11 @@ namespace _Project.Scripts.PlayerScripts
         }
 
 
-        private IEnumerator Movement()
+        private async UniTaskVoid Movement()
         {
             while (true)
             {
-                yield return new WaitUntil((() => _movementQueue.Count > 0));
+                await UniTask.WaitUntil((() => _movementQueue.Count > 0));
                 
                 _currentMovementList = _movementQueue.Dequeue();
              
@@ -78,23 +79,23 @@ namespace _Project.Scripts.PlayerScripts
                     
                     var targetPosition = _currentRoadTile.transform.position + new Vector3(0, .2f, 0f);
                     
-                    var directionToTarget = GameFuncs.GetRoadPos(_currentRoadTile.TileIndex+1) - transform.position;
+                    var directionToTarget = GameFuncs.GetRoadTile(CurrentIndex+1).transform.position - transform.position;
                     var lookRotation = Quaternion.LookRotation(directionToTarget).eulerAngles;
 
                     lookRotation.y -= 90f;
                     lookRotation.x = 0; lookRotation.z = 0;
+
+                    GameFuncs.GetRoadTile(CurrentIndex).PlayParticle();
+                    await UniTask.WhenAll(transform.DOJump(targetPosition, 1.5f, 1, .35f).ToUniTask());
+                    
+       
                     
                     transform.rotation = Quaternion.Euler(lookRotation);
                     
-                    transform.DOJump(targetPosition, 1.5f, 1, .35f); 
-            
-                    yield return new WaitForSeconds(.4f);
                 }
-                yield return null;
-
-
+                
             }
-          
+            
         }
     
     }
