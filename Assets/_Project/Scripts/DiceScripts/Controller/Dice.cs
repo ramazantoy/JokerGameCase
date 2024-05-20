@@ -12,8 +12,13 @@ namespace _Project.Scripts.DiceScripts.Controller
         private DiceData _properties;
 
         private Action<Dice> _onRollDone;
+        
+        
+        public string OnCompleteKey { get; private set; }
+        
 
-        public void RollDice(int number, FaceIndexData faceIndex,Action<Dice> onRollDone)
+      
+        public void RollDice(int number, FaceIndexData faceIndex,Action<Dice> onRollDone,string onCompleteKey)
         {
             List<int> numbers = new() { 1, 2, 3, 4, 5, 6 };
 
@@ -21,11 +26,13 @@ namespace _Project.Scripts.DiceScripts.Controller
             int[] oppositeIndices = { 5, 2, 1, 4, 3, 0 };
 
             var faceIndexData = faceIndex;
-
+            
             _properties.DiceFaces[faceIndexData.FaceIndex].SetFaceNumber(number);
             _properties.DiceFaces[oppositeIndices[faceIndexData.FaceIndex]].SetFaceNumber(7 - number);
             numbers.Remove(number);
             numbers.Remove(7 - number);
+
+            OnCompleteKey = onCompleteKey;
 
             var filledIndices = new HashSet<int> { faceIndexData.FaceIndex, oppositeIndices[faceIndexData.FaceIndex] };
 

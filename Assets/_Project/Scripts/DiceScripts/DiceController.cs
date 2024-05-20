@@ -17,6 +17,8 @@ namespace _Project.Scripts.DiceScripts
         private List<Dice> _diceList;
         private EventBinding<RollDiceEvent> _rollDiceEvent;
 
+        private readonly Dictionary<string, RollData> _rolledDicesDictionary = new Dictionary<string, RollData>();
+
 
         private void OnEnable()
         {
@@ -46,9 +48,21 @@ namespace _Project.Scripts.DiceScripts
             
             dice1.gameObject.SetActive(true);
             dice2.gameObject.SetActive(true);
+
+            var onRolledKey = Guid.NewGuid().ToString();
             
-            dice1.RollDice(rollDiceEvent.Number1, _diceDataContainer.GetRandomFace(),AddDice);
-            dice2.RollDice(rollDiceEvent.Number2, _diceDataContainer.GetRandomFace(),AddDice);
+            dice1.RollDice(rollDiceEvent.Number1, _diceDataContainer.GetRandomFace(),AddDice,onRolledKey);
+            dice2.RollDice(rollDiceEvent.Number2, _diceDataContainer.GetRandomFace(),AddDice,onRolledKey);
+
+            var rolledList = new List<Dice> { dice1, dice2 };
+            
+          
+
+            var rollData = new RollData(rollDiceEvent.Number1 + rollDiceEvent.Number2, rolledList);
+
+            _rolledDicesDictionary.Add(onRolledKey,rollData);
+
+         
         }
 
         private Dice GetDice()
@@ -67,6 +81,15 @@ namespace _Project.Scripts.DiceScripts
         {
             dice.gameObject.SetActive(false);
             _diceList.Add(dice);
+
+            if (!_rolledDicesDictionary.TryGetValue(dice.OnCompleteKey, out var rollData)) return;
+            
+            rollData.RolledDices.Remove(dice);
+            
+            if (rollData.RolledDices.Count > 0) return;
+            
+            EventBus<OnRollDoneEvent>.Publish(new OnRollDoneEvent{rollValue = rollData.RollValue});
+            _rolledDicesDictionary.Remove(dice.OnCompleteKey);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using _Project.Scripts.Events.EventBusScripts;
 using _Project.Scripts.Events.GameEvents;
+using _Project.Scripts.Funcs;
 using _Project.Scripts.GridSystem.Tile;
 using DG.Tweening;
 using UnityEditor;
@@ -25,11 +26,29 @@ namespace _Project.Scripts.GridSystem
         [SerializeField]
         private List<RoadTile> _roadTiles;
 
+
+        private void OnEnable()
+        {
+            GameFuncs.GetMovementTiles += GetMovementTiles;
+            GameFuncs.GetRoadPos += GetRoadPos;
+        }
+
+        private void OnDisable()
+        {
+            GameFuncs.GetMovementTiles -= GetMovementTiles;
+            GameFuncs.GetRoadPos -= GetRoadPos;
+        }
+
         private void Start()
         {
             if (_roadTiles==null || _roadTiles.Count<=0)
             { 
                 BuildMapOnEditor(false);
+            }
+
+            for (var i = 0; i <_roadTiles.Count; i++)
+            {
+                _roadTiles[i].TileIndex = i ;
             }
 
             StartCoroutine(StartAnim());
@@ -50,7 +69,7 @@ namespace _Project.Scripts.GridSystem
                 yield return new WaitForSeconds(.025f);
             }
             
-            EventBus<OnBoardReady>.Publish(new OnBoardReady());
+            EventBus<OnBoardReadyEvent>.Publish(new OnBoardReadyEvent());
             
         }
 
@@ -129,8 +148,12 @@ namespace _Project.Scripts.GridSystem
             {
                 tile.SetText(tileIndex.ToString());
                 tileIndex++;
+                
             }
-            _roadTiles.Add(tile as RoadTile);
+
+            var roadTile = tile as RoadTile;
+            _roadTiles.Add(roadTile);
+
         }
 
 
@@ -138,6 +161,7 @@ namespace _Project.Scripts.GridSystem
         {
             Debug.LogWarning("Remove Tiles  On Editor");
             var childList = new List<TileBase>(transform.GetComponentsInChildren<TileBase>());
+            _roadTiles.Clear();
 
             foreach (var child in childList)
             {
@@ -146,27 +170,23 @@ namespace _Project.Scripts.GridSystem
         }
 #endif
 
-        // public List<TileBase> GetNeighbors(Vector2Int coordinate)
-        // {
-        //     var neighbors = new List<TileBase>();
-        //     int row = coordinate.x;
-        //     int col = coordinate.y;
-        //     int[] dRow = { -1, 1, 0, 0, -1, -1, 1, 1 };
-        //     int[] dCol = { 0, 0, -1, 1, -1, 1, -1, 1 };
-        //
-        //     for (int i = 0; i < 8; i++)
-        //     {
-        //         int newRow = row + dRow[i];
-        //         int newCol = col + dCol[i];
-        //
-        //         if (newRow >= 0 && newRow < tiles.GetLength(0) && newCol >= 0 && newCol < tiles.GetLength(1) &&
-        //             tiles[newRow, newCol] != null)
-        //         {
-        //             neighbors.Add(tiles[newRow, newCol]);
-        //         }
-        //     }
-        //
-        //     return neighbors;
-        // }
+        private List<RoadTile> GetMovementTiles(int currentIndex, int moveAmount)
+        {
+            var roadList = new List<RoadTile>();
+            for (var i = 1; i <= moveAmount; i++)
+            {
+                roadList.Add(_roadTiles[(currentIndex + i) % _roadTiles.Count]);
+            }
+
+            return roadList;
+        }
+
+        private Vector3 GetRoadPos(int index)
+        {
+            index = index % _roadTiles.Count;
+            return _roadTiles[index].transform.position;
+        }
+
+
     }
 }
