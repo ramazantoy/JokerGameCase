@@ -8,21 +8,22 @@ namespace _Project.Scripts.UI.GridScripts
 {
     public class GridControllerUI : MonoBehaviour
     {
+        [SerializeField] private RectTransform _panelGridTransform;
 
-        [SerializeField]
-        private RectTransform _panelGridTransform;
-        
         private EventBinding<OnChangePanelEvent> _onChangePanelEvent;
 
-        private  EventBinding<OnClosePanelEvent> _onClosePanelEvent;
+        private EventBinding<OnClosePanelEvent> _onClosePanelEvent;
+
         private void OnEnable()
         {
             _onChangePanelEvent = new EventBinding<OnChangePanelEvent>(OnChangePanel);
 
             _onClosePanelEvent = new EventBinding<OnClosePanelEvent>(OnClosePanel);
-            
+
             EventBus<OnChangePanelEvent>.Subscribe(_onChangePanelEvent);
             EventBus<OnClosePanelEvent>.Subscribe(_onClosePanelEvent);
+
+            transform.DOScale(Vector3.one, 4f).SetEase(Ease.OutQuint);
         }
 
         private void OnDisable()
@@ -33,7 +34,7 @@ namespace _Project.Scripts.UI.GridScripts
 
         private void OnChangePanel()
         {
-            _panelGridTransform.DOScale(Vector3.one*4f, .25f);
+            _panelGridTransform.DOScale(Vector3.one * 4f, .25f);
         }
 
         private void OnClosePanel()

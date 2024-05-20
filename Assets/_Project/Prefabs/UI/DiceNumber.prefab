@@ -376,7 +376,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Dice Number
+  m_text: Enter Number
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9feebce0f6716cb46916560de35255e7, type: 2}
   m_sharedMaterial: {fileID: 3228037476317530833, guid: 9feebce0f6716cb46916560de35255e7, type: 2}
@@ -403,7 +403,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37.35
+  m_fontSize: 32.65
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
