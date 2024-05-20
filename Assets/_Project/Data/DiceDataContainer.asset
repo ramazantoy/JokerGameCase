@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ea56089394b0d84ebec0c678ed731bd, type: 3}
   m_Name: DiceDataContainer
   m_EditorClassIdentifier: 
+  DicePref: {fileID: 6523334446274728194, guid: 786011a3971a5134aa576e817999794a, type: 3}
   _faceIndexData:
   - AnimName: Roll_1
     FaceIndex: 2

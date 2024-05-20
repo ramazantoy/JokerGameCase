@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using _Project.Scripts.DiceScripts.Face;
 using UnityEngine;
 
@@ -8,8 +10,10 @@ namespace _Project.Scripts.DiceScripts.Controller
     {
         [SerializeField] 
         private DiceData _properties;
-        
-        public void RollDice(int number, FaceIndexData faceIndex)
+
+        private Action<Dice> _onRollDone;
+
+        public void RollDice(int number, FaceIndexData faceIndex,Action<Dice> onRollDone)
         {
             List<int> numbers = new() { 1, 2, 3, 4, 5, 6 };
 
@@ -52,7 +56,32 @@ namespace _Project.Scripts.DiceScripts.Controller
                 i++;
             }
 
-            _properties.DiceAnimator.Play(faceIndexData.AnimName, -1, 0);
+            _onRollDone = onRollDone;
+            PlayAnimation(faceIndex.AnimName);
         }
+        private void PlayAnimation(string animName)
+        {
+            var clip = GetAnimationClipByName(animName);
+            
+            if (clip == null) return;
+            
+            var originalDuration = clip.length;
+            var speedMultiplier = originalDuration / 2f;
+            _properties.DiceAnimator.speed = speedMultiplier;
+
+            _properties.DiceAnimator.Play(animName, -1, 0);
+
+        }
+        private AnimationClip GetAnimationClipByName(string name)
+        {
+            return _properties.DiceAnimator.runtimeAnimatorController.animationClips.FirstOrDefault(clip => clip.name == name);
+        }
+
+        public void OnRollDoneEvent()
+        {
+            _onRollDone.Invoke(this);
+        }
+
+      
     }
 }

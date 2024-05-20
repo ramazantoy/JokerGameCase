@@ -8,10 +8,17 @@ namespace _Project.Scripts.DiceScripts.Controller
     [CreateAssetMenu(fileName = "DiceDataContainer",menuName = "ScriptableObjects/DiceDataContainer")]
     public class DiceDataContainer : ScriptableObject
     {
+        public Dice DicePref;
         [SerializeField]
         private List<FaceIndexData> _faceIndexData;
         
         private Queue<FaceIndexData> _shuffledFaces;
+
+
+        public void Init()
+        {
+            ShuffleFaces();
+        }
 
         public FaceIndexData GetRandomFace()
         {

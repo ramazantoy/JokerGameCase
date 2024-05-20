@@ -15,20 +15,52 @@ namespace _Project.Scripts.GridSystem
 
         [SerializeField] private Transform _envTilesParent;
         [SerializeField] private Transform _roadTilesParent;
+        
 
+        
         private TileBase[,] tiles;
 
+        [SerializeField]
+        private List<RoadTile> _roadTiles;
+
+        private void Start()
+        {
+            if (_roadTiles==null || _roadTiles.Count<=0)
+            { 
+                BuildMapOnEditor(false);
+            }
+
+            StartCoroutine(StartAnim());
+        }
+
+        private IEnumerator StartAnim()
+        {
+            var childList = new List<TileBase>(transform.GetComponentsInChildren<TileBase>());
+            
+            foreach (var tileBase in childList)
+            {
+                tileBase.transform.localScale=Vector3.zero;
+            }
+            
+            foreach (var tileBase in childList)
+            {
+                tileBase.StartAnim(.1f);
+                yield return new WaitForSeconds(.025f);
+            }
+            
+        }
 
 #if UNITY_EDITOR
 
-        public void BuildMapOnEditor()
+        public void BuildMapOnEditor(bool useInEditor=true)
         {
+            _roadTiles.Clear();
             Debug.LogWarning("Map Building On Editor");
 
             var rowRolCount = _gridBuilderDataContainer.RowColCount;
             tiles = new TileBase[rowRolCount, rowRolCount];
 
-            var envTilePref = _gridBuilderDataContainer.EnvTilePref;
+           
 
             var startPos = _gridBuilderDataContainer.StartPos;
 
@@ -41,7 +73,7 @@ namespace _Project.Scripts.GridSystem
             {
                 for (int j = 0; j < rowRolCount; j++)
                 {
-                    var tile = PrefabUtility.InstantiatePrefab(envTilePref, _envTilesParent.transform) as TileBase;
+                    var tile = useInEditor ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.EnvTilePref, _envTilesParent.transform) as TileBase  : Instantiate(_gridBuilderDataContainer.EnvTilePref, _envTilesParent.transform);
                     tile.gameObject.name = $"EnvTile {i}_{j}";
                     tile.transform.position = startPos + new Vector3(i * tileSpacing, 0, j * tileSpacing);
                     tiles[i, j] = tile;
@@ -73,15 +105,14 @@ namespace _Project.Scripts.GridSystem
             }
         }
 
-        private void SetRoadTile(int i, int j, ref int tileIndex, string text = "")
+        private void SetRoadTile(int i, int j, ref int tileIndex, string text = "",bool useInEditor=true)
         {
             if (tiles[i, j] != null)
             {
                 DestroyImmediate(tiles[i, j].gameObject);
             }
 
-            var tile = PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.RoadTilePref,
-                _roadTilesParent.transform) as TileBase;
+            var tile =  useInEditor ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.RoadTilePref, _roadTilesParent.transform) as TileBase : Instantiate(_gridBuilderDataContainer.RoadTilePref, _envTilesParent.transform);
             tile.gameObject.name = $"RoadTile {i}_{j}";
             tile.transform.position = _gridBuilderDataContainer.StartPos + new Vector3(i * _gridBuilderDataContainer.TileSpacing, 0f, j * _gridBuilderDataContainer.TileSpacing);
             tiles[i, j] = tile;
@@ -95,6 +126,7 @@ namespace _Project.Scripts.GridSystem
                 tile.SetText(tileIndex.ToString());
                 tileIndex++;
             }
+            _roadTiles.Add(tile as RoadTile);
         }
 
 
@@ -110,27 +142,27 @@ namespace _Project.Scripts.GridSystem
         }
 #endif
 
-        public List<TileBase> GetNeighbors(Vector2Int coordinate)
-        {
-            var neighbors = new List<TileBase>();
-            int row = coordinate.x;
-            int col = coordinate.y;
-            int[] dRow = { -1, 1, 0, 0, -1, -1, 1, 1 };
-            int[] dCol = { 0, 0, -1, 1, -1, 1, -1, 1 };
-
-            for (int i = 0; i < 8; i++)
-            {
-                int newRow = row + dRow[i];
-                int newCol = col + dCol[i];
-
-                if (newRow >= 0 && newRow < tiles.GetLength(0) && newCol >= 0 && newCol < tiles.GetLength(1) &&
-                    tiles[newRow, newCol] != null)
-                {
-                    neighbors.Add(tiles[newRow, newCol]);
-                }
-            }
-
-            return neighbors;
-        }
+        // public List<TileBase> GetNeighbors(Vector2Int coordinate)
+        // {
+        //     var neighbors = new List<TileBase>();
+        //     int row = coordinate.x;
+        //     int col = coordinate.y;
+        //     int[] dRow = { -1, 1, 0, 0, -1, -1, 1, 1 };
+        //     int[] dCol = { 0, 0, -1, 1, -1, 1, -1, 1 };
+        //
+        //     for (int i = 0; i < 8; i++)
+        //     {
+        //         int newRow = row + dRow[i];
+        //         int newCol = col + dCol[i];
+        //
+        //         if (newRow >= 0 && newRow < tiles.GetLength(0) && newCol >= 0 && newCol < tiles.GetLength(1) &&
+        //             tiles[newRow, newCol] != null)
+        //         {
+        //             neighbors.Add(tiles[newRow, newCol]);
+        //         }
+        //     }
+        //
+        //     return neighbors;
+        // }
     }
 }
