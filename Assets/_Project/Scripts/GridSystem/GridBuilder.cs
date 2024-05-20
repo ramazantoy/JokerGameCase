@@ -30,13 +30,11 @@ namespace _Project.Scripts.GridSystem
 
         private void OnEnable()
         {
-            GameFuncs.GetMovementTiles += GetMovementTiles;
             GameFuncs.GetRoadTile += GetRoadTile;
         }
 
         private void OnDisable()
         {
-            GameFuncs.GetMovementTiles -= GetMovementTiles;
             GameFuncs.GetRoadTile -= GetRoadTile;
         }
 
@@ -171,17 +169,7 @@ namespace _Project.Scripts.GridSystem
         }
 #endif
 
-        private List<RoadTile> GetMovementTiles(int currentIndex, int moveAmount)
-        {
-            var roadList = new List<RoadTile>();
-            for (var i = 1; i <= moveAmount; i++)
-            {
-                roadList.Add(_roadTiles[(currentIndex + i) % _roadTiles.Count]);
-            }
-
-            return roadList;
-        }
-
+        
         private RoadTile GetRoadTile(int index)
         {
             index = index % _roadTiles.Count;
