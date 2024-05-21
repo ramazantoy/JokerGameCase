@@ -34,10 +34,8 @@ namespace _Project.Scripts
             
             await UniTask.WaitForSeconds(Random.Range(1, 3f)); 
             
-            SceneManager.LoadSceneAsync((int)sceneType, LoadSceneMode.Additive);
-       
-       
-            Debug.LogWarning("scene load called");
+            await SceneManager.LoadSceneAsync((int)sceneType, LoadSceneMode.Additive);
+            
         }
         
     }
