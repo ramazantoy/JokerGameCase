@@ -1,4 +1,3 @@
-using _Project.Scripts.Handlers;
 using UnityEngine;
 
 namespace _Project.Scripts.SaveSystem
@@ -49,7 +48,6 @@ namespace _Project.Scripts.SaveSystem
             set
             {
                 _earnGem = value;
-                ActionHandler.EarnGemChanged?.Invoke(_earnGem);
             }
         }
 
@@ -59,8 +57,7 @@ namespace _Project.Scripts.SaveSystem
             set
             {
                 _earnMoney = value;
-                ActionHandler.EarnMoneyChanged?.Invoke(_earnMoney);
- 
+
             }
         }
 
@@ -71,7 +68,6 @@ namespace _Project.Scripts.SaveSystem
             {
                 _isMusicOn = value;
                 
-                ActionHandler.SoundSettingsChanged?.Invoke(!value);
             }
         }
 
@@ -90,7 +86,6 @@ namespace _Project.Scripts.SaveSystem
             {
                 if (value)
                 {
-                    ActionHandler.NoAdsBought?.Invoke();
                 }
                 _noAds = value;
             }
@@ -109,7 +104,6 @@ namespace _Project.Scripts.SaveSystem
             set
             {
                 _isVibrationOn = value;
-                ActionHandler.HapticSettingsChanged?.Invoke(value);
             }
         }
     

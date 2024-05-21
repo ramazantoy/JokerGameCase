@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using _Project.Scripts.Events.EventBusScripts;
+using _Project.Scripts.Events.GameEvents;
 using UnityEngine;
 
 namespace _Project.Scripts.SaveSystem
@@ -12,7 +14,7 @@ namespace _Project.Scripts.SaveSystem
         private GameSaveData GameSaveData => _gameSaveDataContainer.Data;
 
 
-        private void Awake()
+        private void Start()
         {
             LoadData();
         }
@@ -25,6 +27,8 @@ namespace _Project.Scripts.SaveSystem
             {
                 savableData.Load();
             }
+            
+            EventBus<OnGameDataLoadedEvent>.Publish(new OnGameDataLoadedEvent());
         }
 
         private void Save()
