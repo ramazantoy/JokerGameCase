@@ -14,19 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DicePref: {fileID: 6523334446274728194, guid: 786011a3971a5134aa576e817999794a, type: 3}
   _faceIndexData:
-  - AnimName: Roll_1
+  - AnimName: 1
     FaceIndex: 2
-  - AnimName: Roll_2
+  - AnimName: 2
     FaceIndex: 0
-  - AnimName: Roll_3
+  - AnimName: 3
     FaceIndex: 4
-  - AnimName: Roll_4
+  - AnimName: 4
     FaceIndex: 1
-  - AnimName: Roll_5
+  - AnimName: 5
     FaceIndex: 3
-  - AnimName: Roll_6
+  - AnimName: 6
     FaceIndex: 1
-  - AnimName: Roll_7
+  - AnimName: 7
     FaceIndex: 0
-  - AnimName: Roll_8
+  - AnimName: 8
     FaceIndex: 4

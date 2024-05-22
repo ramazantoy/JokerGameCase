@@ -11,8 +11,8 @@ namespace _Project.Scripts.DiceScripts.Controller
         public Dice DicePref;
         [SerializeField]
         private List<FaceIndexData> _faceIndexData;
-        
         private Queue<FaceIndexData> _shuffledFaces;
+        
 
 
         public void Init()
@@ -53,4 +53,5 @@ namespace _Project.Scripts.DiceScripts.Controller
         public string AnimName;
         public int FaceIndex;
     }
+    
 }

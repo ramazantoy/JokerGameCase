@@ -64,7 +64,7 @@ namespace _Project.Scripts.DiceScripts.Controller
             }
 
             _onRollDone = onRollDone;
-            PlayAnimation(faceIndex.AnimName);
+            PlayAnimation($"Roll_{faceIndex.AnimName}");
         }
         private void PlayAnimation(string animName)
         {
@@ -73,7 +73,7 @@ namespace _Project.Scripts.DiceScripts.Controller
             if (clip == null) return;
             
             var originalDuration = clip.length;
-            var speedMultiplier = originalDuration / 2f;
+            var speedMultiplier = originalDuration / (GameManager.GameState == GameState.Normal ? 2f : .5f);
             _properties.DiceAnimator.speed = speedMultiplier;
 
             _properties.DiceAnimator.Play(animName, -1, 0);

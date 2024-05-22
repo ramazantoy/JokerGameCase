@@ -16,20 +16,47 @@ namespace _Project.Scripts.UI
 
         [SerializeField]
         private Button _rollButton;
+        
+       
+        private EventBinding<OnUpdateGameStateEvent> _onUpdateGameStateEvent;
+        
+        private void OnUpdateGameState(OnUpdateGameStateEvent onUpdateGameStateEvent)
+        {
+            _fillImage.DOKill();
 
+            if (onUpdateGameStateEvent.newState == GameState.Normal)
+            {
+                _fillImage.fillAmount = 1;
+                _rollButton.interactable = true;
+            }
+            else
+            {
+                _fillImage.fillAmount = 0;
+                _rollButton.interactable = false;
+            }
+        }
+
+     
         private void OnEnable()
         {
             _rollButton.onClick.AddListener(OnButtonDown);
+
+            _onUpdateGameStateEvent = new EventBinding<OnUpdateGameStateEvent>(OnUpdateGameState); 
+            EventBus<OnUpdateGameStateEvent>.Subscribe(_onUpdateGameStateEvent);
         }
 
         private void OnDisable()
         {
             _rollButton.onClick.RemoveAllListeners();
+            EventBus<OnUpdateGameStateEvent>.Unsubscribe(_onUpdateGameStateEvent);
         }
 
         [SerializeField] private TextMeshProUGUI[] _textMeshes;
+        
+        
+        
 
-        public void OnButtonDown()
+        private void OnButtonDown()
         {
             if (_textMeshes.Length < 2) return;
             var textChars1 = _textMeshes[0].text.ToCharArray();
@@ -58,5 +85,7 @@ namespace _Project.Scripts.UI
                 Number2 = number2
             });
         }
+
+  
     }
 }

@@ -83,7 +83,8 @@ namespace _Project.Scripts.PlayerScripts
                     lookRotation.z = 0;
 
                     GameFuncs.GetRoadTile(CurrentIndex).PlayParticle();
-                    await UniTask.WhenAll(transform.DOJump(targetPosition, 1.5f, 1, .35f).ToUniTask());
+                    
+                    await UniTask.WhenAll(transform.DOJump(targetPosition, 1.5f, 1, .35f/(GameManager.GameState == GameState.Normal ? 1f : 4f)).ToUniTask());
 
                     transform.rotation = Quaternion.Euler(lookRotation);
                     _movementAmount--;
