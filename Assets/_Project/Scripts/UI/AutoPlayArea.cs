@@ -89,13 +89,15 @@ namespace _Project.Scripts.UI
             {
                 for (var i = rollAmount; i > 0; i--)
                 {
+                    RollDice();
+
+                    _moveAmountTextArea.text = i.ToString();
+                    
                     token.ThrowIfCancellationRequested();
                     
                     await UniTask.Delay(1500, cancellationToken: token);
                     
-                    RollDice();
-
-                    _moveAmountTextArea.text = i.ToString();
+                
                 }
             }
             catch (OperationCanceledException)

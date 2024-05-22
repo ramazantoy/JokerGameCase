@@ -8,6 +8,7 @@ namespace _Project.Scripts.DiceScripts.Controller
     public struct DiceData
     {
         public Animator DiceAnimator;
+        public GameObject DiceParticle;
         public List<DiceFace> DiceFaces;
     }
 }

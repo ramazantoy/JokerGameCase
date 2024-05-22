@@ -67,7 +67,10 @@ namespace _Project.Scripts.DiceScripts.Controller
             PlayAnimation($"Roll_{faceIndex.AnimName}");
         }
         private void PlayAnimation(string animName)
-        {
+        { 
+            _properties.DiceParticle.transform.parent = transform.GetChild(0);
+            _properties.DiceParticle.transform.localPosition = new Vector3(0, .15f, 0);
+            _properties.DiceParticle.SetActive(false);
             var clip = GetAnimationClipByName(animName);
             
             if (clip == null) return;
@@ -86,6 +89,8 @@ namespace _Project.Scripts.DiceScripts.Controller
 
         public void OnRollDoneEvent()
         {
+            _properties.DiceParticle.transform.parent = null;
+            _properties.DiceParticle.SetActive(true);
             _onRollDone.Invoke(this);
         }
 
