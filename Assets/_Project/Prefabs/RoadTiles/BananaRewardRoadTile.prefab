@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1226746475414371045
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2785282738764224104, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785282738764224104, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785282738764224104, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785282738764224104, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785282738764224104, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785282738764224104, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785282738764224104, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785282738764224104, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785282738764224104, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785282738764224104, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5292548789257451998, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      propertyPath: m_Name
+      value: BananaRewardRoadTile
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3708173858654288597, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5292548789257451998, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 407043090102065564}
+  m_SourcePrefab: {fileID: 100100000, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+--- !u!114 &562980915710304652 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1645603059330816873, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+  m_PrefabInstance: {fileID: 1226746475414371045}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!198 &3950875001259834102 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2869378499596582931, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+  m_PrefabInstance: {fileID: 1226746475414371045}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6373911230244193083 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5292548789257451998, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+  m_PrefabInstance: {fileID: 1226746475414371045}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &407043090102065564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6373911230244193083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c42064bcc64fe244abea3ca0cf69e06d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartScale: {x: 1, y: 0.2, z: 1}
+  _tileParticle: {fileID: 3950875001259834102}
+  TileText: {fileID: 562980915710304652}
+  TileColor: {r: 0.9882353, g: 1, b: 0, a: 0}

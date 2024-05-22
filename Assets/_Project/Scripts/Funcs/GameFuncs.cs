@@ -7,6 +7,6 @@ namespace _Project.Scripts.Funcs
 {
     public class GameFuncs
     {
-        public static Func<int, RoadTile> GetRoadTile;
+        public static Func<int, RoadTileBase> GetRoadTile;
     }
 }

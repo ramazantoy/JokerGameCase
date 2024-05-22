@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using _Project.Scripts.Events.GameEvents;
-using UnityEngine;
 
 namespace _Project.Scripts.Events.EventBusScripts
 {
@@ -31,7 +28,7 @@ namespace _Project.Scripts.Events.EventBusScripts
             }
         }
 
-        private static void Clear()
+       public  static void Clear()
         {
             _bindings.Clear();
         }

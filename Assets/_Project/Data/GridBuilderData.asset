@@ -12,9 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fee43e1f1be9c3429b22f1281bf85fa, type: 3}
   m_Name: GridBuilderData
   m_EditorClassIdentifier: 
-  RoadTilePref: {fileID: 4026981009587757016, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+  RoadTilePref: {fileID: 3708173858654288597, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+  AppleRewardRoadTilePref: {fileID: 3106373693756120715, guid: 2f4ce3ba63bc0024494274aecf1c4229, type: 3}
+  BananaRewardRoadTilePref: {fileID: 407043090102065564, guid: f326df24ed0d6e2458518c1f554fd893, type: 3}
+  WatermelonRewardRoadTilePref: {fileID: 5758942067279850341, guid: 3ab166f9dbb273c4a818267ac8ca9b0c, type: 3}
   EnvTilePref: {fileID: 2519104919608898554, guid: ddbf230c4d73bbc4289c89be5534ed9b, type: 3}
-  RowColCount: 10
-  StartPos: {x: 0, y: 0, z: -8}
-  TileSpacing: 1.1
-  RoadStartOffset: 1
+  BuildSettings:
+    RowColCount: 10
+    StartPos: {x: 0, y: 0, z: -7.5}
+    TileSpacing: 1.1
+    RoadStartOffset: 1
+    NoRewardTileRate: 55
+    BananaRewardTileRate: 15
+    AppleRewardTileRate: 15
+    WatermelonRewardTileRate: 15

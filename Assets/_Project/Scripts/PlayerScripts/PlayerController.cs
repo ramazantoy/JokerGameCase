@@ -15,7 +15,7 @@ namespace _Project.Scripts.PlayerScripts
         private EventBinding<OnBoardReadyEvent> _onboardReadyEvent;
         private EventBinding<OnRollDoneEvent> _onRollDoneEvent;
 
-        private RoadTile _currentRoadTile;
+        private RoadTileBase _currentRoadTile;
         private Queue<int> _movementQueue;
         private int _movementAmount = -1;
 

@@ -33,5 +33,10 @@ namespace _Project.Scripts
         {
             GameState = onUpdateGameStateEvent.newState;
         }
+
+        private void OnApplicationQuit()
+        {
+            EventBus<IEvent>.Clear();
+        }
     }
 }
