@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BananaRewardRoadTile
       objectReference: {fileID: 0}
+    - target: {fileID: 6063888405708287066, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fbe10185ed32ae64ca3b9fb27279af83, type: 2}
     m_RemovedComponents:
     - {fileID: 3708173858654288597, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
     m_RemovedGameObjects: []
@@ -97,4 +101,3 @@ MonoBehaviour:
   StartScale: {x: 1, y: 0.2, z: 1}
   _tileParticle: {fileID: 3950875001259834102}
   TileText: {fileID: 562980915710304652}
-  TileColor: {r: 0.9882353, g: 1, b: 0, a: 0}

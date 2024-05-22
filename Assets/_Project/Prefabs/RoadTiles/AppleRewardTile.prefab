@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AppleRewardTile
       objectReference: {fileID: 0}
+    - target: {fileID: 6063888405708287066, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 80d30fe910e88d14b827def9bc81b1e5, type: 2}
     m_RemovedComponents:
     - {fileID: 3708173858654288597, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
     m_RemovedGameObjects: []
@@ -81,7 +85,6 @@ MonoBehaviour:
   StartScale: {x: 1, y: 0.2, z: 1}
   _tileParticle: {fileID: 6126982967793020581}
   TileText: {fileID: 7206644809120314847}
-  TileColor: {r: 1, g: 0.6144675, b: 0.23148806, a: 0}
 --- !u!198 &6126982967793020581 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 2869378499596582931, guid: 15b71c8da55d93442904dcd95620f97b, type: 3}
