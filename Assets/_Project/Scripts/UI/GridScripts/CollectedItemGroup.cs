@@ -12,11 +12,18 @@ namespace _Project.Scripts.UI.GridScripts
 
         [SerializeField]
         private CollectedItemSaveDataContainer _collectedItemSaveDataContainer;
+        
         [SerializeField]
         private TextMeshProUGUI _collectedAmountText;
+        
         private CollectedItemType _collectedItemType;
 
         private EventBinding<OnCollectedItemEvent> _onCollectedItemEvent;
+
+        [SerializeField]
+        private RectTransform _targetTransform;
+
+        public RectTransform TargetTransform => _targetTransform;
 
         public virtual void Awake()
         {

@@ -1,7 +1,8 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UIElements;
+
+using UnityEngine.UI;
 
 namespace _Project.Scripts.UI.CollectItemScripts
 {
@@ -9,21 +10,21 @@ namespace _Project.Scripts.UI.CollectItemScripts
     {
         [SerializeField]
         private CollectItemDataContainer _collectItemDataContainer;
+        
+        [SerializeField]
         private Image _myImage;
 
-        private void Awake()
-        {
-            _myImage = transform.GetComponent<Image>();
-        }
+    
 
-        private void SetSprite(int index)
+        public void SetSprite(int index)
         {
             _myImage.sprite = _collectItemDataContainer.GetSprite(index);
         }
 
         public void MoveToTarget(RectTransform target,Action<CollectItem> onComplete)
         {
-            transform.DOLocalMove(Vector3.zero, .25f).OnComplete((() =>
+            transform.parent = target;
+            transform.DOLocalMove(Vector3.zero, .35f).OnComplete((() =>
             {
                 onComplete?.Invoke(this);
             }));

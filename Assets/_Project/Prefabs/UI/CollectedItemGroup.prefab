@@ -302,6 +302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collectedItemSaveDataContainer: {fileID: 11400000, guid: 69fc2c001cbc5914692246b3b40cffd8, type: 2}
   _collectedAmountText: {fileID: 2479830975909928483}
+  _targetTransform: {fileID: 4663083094725161953}
 --- !u!1 &5909908977491406565
 GameObject:
   m_ObjectHideFlags: 0
