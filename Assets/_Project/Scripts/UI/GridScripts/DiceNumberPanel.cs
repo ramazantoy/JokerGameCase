@@ -7,22 +7,24 @@ using UnityEngine;
 
 namespace _Project.Scripts.UI.GridScripts
 {
-    public class DiceNumberPanel : MonoBehaviour
+    public class DiceNumberPanel : GridControllerUI
     {
         
         [SerializeField]
         private TMP_InputField[] _tmpInputFields;
 
         private EventBinding<OnUpdateGameStateEvent> _onUpdateGameStateEvent;
-        private void OnEnable()
+        public override void OnEnable()
         {
+            base.OnEnable();
             _onUpdateGameStateEvent = new EventBinding<OnUpdateGameStateEvent>(OnUpdateGameStateEvent);
             
             EventBus<OnUpdateGameStateEvent>.Subscribe(_onUpdateGameStateEvent);
         }
 
-        private void OnDisable()
+        public override void OnDisable()
         {
+            base.OnDisable();
             EventBus<OnUpdateGameStateEvent>.Unsubscribe(_onUpdateGameStateEvent);
         }
 

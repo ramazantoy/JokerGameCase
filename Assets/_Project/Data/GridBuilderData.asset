@@ -19,7 +19,7 @@ MonoBehaviour:
   EnvTilePref: {fileID: 2519104919608898554, guid: ddbf230c4d73bbc4289c89be5534ed9b, type: 3}
   BuildSettings:
     RowColCount: 10
-    StartPos: {x: 0, y: 0, z: -7.5}
+    StartPos: {x: 0, y: 0, z: -8}
     TileSpacing: 1.1
     RoadStartOffset: 1
     NoRewardTileRate: 55

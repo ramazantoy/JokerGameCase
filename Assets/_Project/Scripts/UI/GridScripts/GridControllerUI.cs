@@ -14,7 +14,7 @@ namespace _Project.Scripts.UI.GridScripts
 
         private EventBinding<OnClosePanelEvent> _onClosePanelEvent;
 
-        private void OnEnable()
+        public virtual void OnEnable()
         {
             _onChangePanelEvent = new EventBinding<OnChangePanelEvent>(OnChangePanel);
 
@@ -26,7 +26,7 @@ namespace _Project.Scripts.UI.GridScripts
             transform.DOScale(Vector3.one, 4f).SetEase(Ease.OutQuint);
         }
 
-        private void OnDisable()
+        public virtual void OnDisable()
         {
             EventBus<OnChangePanelEvent>.Unsubscribe(_onChangePanelEvent);
             EventBus<OnClosePanelEvent>.Unsubscribe(_onClosePanelEvent);
