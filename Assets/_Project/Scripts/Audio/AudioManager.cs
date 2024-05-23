@@ -18,6 +18,7 @@ namespace _Project.Scripts.Audio
         private EventBinding<OnRollDiceEvent> _onRollDiceEvent;
         private EventBinding<OnCollectedItemEvent> _onCollectItemEvent;
         private EventBinding<OnPlayClickSoundEvent> _onPlayClickSoundEvent;
+        private EventBinding<OnMusicSettingsChangedEvent> _onMusicSettingsChangedEvent;
 
         private void Start()
         {
@@ -31,11 +32,13 @@ namespace _Project.Scripts.Audio
             _onRollDiceEvent = new EventBinding<OnRollDiceEvent>(PlayRollDiceSound);
             _onCollectItemEvent = new EventBinding<OnCollectedItemEvent>(PlayCollectItemSound);
             _onPlayClickSoundEvent = new EventBinding<OnPlayClickSoundEvent>(PlayOnClickSound);
+            _onMusicSettingsChangedEvent = new EventBinding<OnMusicSettingsChangedEvent>(SetMusicSettings);
        
             
             EventBus<OnRollDiceEvent>.Subscribe(_onRollDiceEvent);
             EventBus<OnCollectedItemEvent>.Subscribe(_onCollectItemEvent);
             EventBus<OnPlayClickSoundEvent>.Subscribe(_onPlayClickSoundEvent);
+            EventBus<OnMusicSettingsChangedEvent>.Subscribe(_onMusicSettingsChangedEvent);
 
 
         }
@@ -45,6 +48,7 @@ namespace _Project.Scripts.Audio
             EventBus<OnRollDiceEvent>.Unsubscribe(_onRollDiceEvent);
             EventBus<OnCollectedItemEvent>.Unsubscribe(_onCollectItemEvent);
             EventBus<OnPlayClickSoundEvent>.Unsubscribe(_onPlayClickSoundEvent);
+            EventBus<OnMusicSettingsChangedEvent>.Unsubscribe(_onMusicSettingsChangedEvent);
          
         }
 

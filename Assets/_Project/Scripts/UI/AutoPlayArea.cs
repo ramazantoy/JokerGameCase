@@ -21,6 +21,8 @@ namespace _Project.Scripts.UI
         [SerializeField] private TMP_InputField _moveAmountTextArea;
 
         private CancellationTokenSource _cancellationTokenSource;
+        
+        private EventBinding<OnForceRebuildMapEvent> _onForceRebuildMapEvent;
 
         private void OnEnable()
         {
@@ -32,6 +34,17 @@ namespace _Project.Scripts.UI
                 }
             });
             _toggleButton.onClick.AddListener(SetToggleButton);
+
+            _onForceRebuildMapEvent = new EventBinding<OnForceRebuildMapEvent>(OnAutoMoveCanceledOrCompleted);
+            
+            EventBus<OnForceRebuildMapEvent>.Subscribe(_onForceRebuildMapEvent);
+        }
+
+        private void OnDisable()
+        {
+            EventBus<OnForceRebuildMapEvent>.Unsubscribe(_onForceRebuildMapEvent);
+            _toggleButton.onClick.RemoveAllListeners();
+            _moveAmountTextArea.onValueChanged.RemoveAllListeners();
         }
 
 
@@ -127,6 +140,10 @@ namespace _Project.Scripts.UI
 
         private void OnAutoMoveCanceledOrCompleted()
         {
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
+            
             _isToggleOn = false;
             _toggleTransform.DOAnchorPosX(-75f, .15f);
             _rollButton.interactable = true;
@@ -138,8 +155,7 @@ namespace _Project.Scripts.UI
                 newState = GameState.Normal
             });
 
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
+      
         }
     }
 }

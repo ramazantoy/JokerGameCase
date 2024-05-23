@@ -1,15 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using _Project.Scripts.Events.EventBusScripts;
 using _Project.Scripts.Events.GameEvents;
 using _Project.Scripts.Funcs;
 using _Project.Scripts.GridSystem.Tile;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.GridSystem
@@ -26,18 +22,32 @@ namespace _Project.Scripts.GridSystem
         [SerializeField]
         private List<RoadTileBase> _roadTiles;
 
+        private EventBinding<OnForceRebuildMapEvent> _onForceRebuildMapEvent;
+
         private void OnEnable()
         {
             GameFuncs.GetRoadTile += GetRoadTile;
+            
+            _onForceRebuildMapEvent = new EventBinding<OnForceRebuildMapEvent>(ForceBuild);
+            
+            EventBus<OnForceRebuildMapEvent>.Subscribe(_onForceRebuildMapEvent);
         }
 
         private void OnDisable()
         {
             GameFuncs.GetRoadTile -= GetRoadTile;
+            EventBus<OnForceRebuildMapEvent>.Unsubscribe(_onForceRebuildMapEvent);
         }
 
         private void Start()
         {
+            ForceBuild();
+        }
+
+        private void ForceBuild()
+        {
+            RemoveTiles();
+            
             if (_roadTiles == null || _roadTiles.Count <= 0)
             {
                 BuildMapOnEditor(false);
@@ -49,6 +59,7 @@ namespace _Project.Scripts.GridSystem
             }
 
             StartAnim().Forget();
+            
         }
 
         private async UniTaskVoid StartAnim()
@@ -66,7 +77,9 @@ namespace _Project.Scripts.GridSystem
                 await UniTask.WaitForSeconds(.025f);
             }
 
+            
             EventBus<OnBoardReadyEvent>.Publish(new OnBoardReadyEvent());
+
         }
         
         public void BuildMapOnEditor(bool useInEditor = true)
@@ -192,19 +205,27 @@ namespace _Project.Scripts.GridSystem
             return null;
         }
 
-#if UNITY_EDITOR
-        public void RemoveTiles()
+
+        public void RemoveTiles(bool isEditor=true)
         {
-            Debug.LogWarning("Remove Tiles On Editor");
+            
             var childList = new List<TileBase>(transform.GetComponentsInChildren<TileBase>());
             _roadTiles.Clear();
 
             foreach (var child in childList)
             {
-                DestroyImmediate(child.gameObject);
+                if (isEditor)
+                {
+                    DestroyImmediate(child.gameObject);
+                }
+                else
+                {
+                    Destroy(child.gameObject);
+                }
+          
             }
         }
-#endif
+
     
 
         private RoadTileBase GetRoadTile(int index)
