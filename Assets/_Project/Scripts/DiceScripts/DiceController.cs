@@ -15,16 +15,16 @@ namespace _Project.Scripts.DiceScripts
 
 
         private List<Dice> _diceList;
-        private EventBinding<RollDiceEvent> _rollDiceEvent;
+        private EventBinding<OnRollDiceEvent> _rollDiceEvent;
 
         private readonly Dictionary<string, RollData> _rolledDicesDictionary = new Dictionary<string, RollData>();
 
 
         private void OnEnable()
         {
-            _rollDiceEvent = new EventBinding<RollDiceEvent>(OnRollDices);
+            _rollDiceEvent = new EventBinding<OnRollDiceEvent>(OnRollDices);
 
-            EventBus<RollDiceEvent>.Subscribe(_rollDiceEvent);
+            EventBus<OnRollDiceEvent>.Subscribe(_rollDiceEvent);
 
 
             _diceList = new List<Dice>();
@@ -38,10 +38,10 @@ namespace _Project.Scripts.DiceScripts
 
         private void OnDisable()
         {
-            EventBus<RollDiceEvent>.Unsubscribe(_rollDiceEvent);
+            EventBus<OnRollDiceEvent>.Unsubscribe(_rollDiceEvent);
         }
 
-        private void OnRollDices(RollDiceEvent rollDiceEvent)
+        private void OnRollDices(OnRollDiceEvent onRollDiceEvent)
         {
             var dice1 = GetDice();
             var dice2 = GetDice();
@@ -51,14 +51,14 @@ namespace _Project.Scripts.DiceScripts
 
             var onRolledKey = Guid.NewGuid().ToString();
             
-            dice1.RollDice(rollDiceEvent.Number1, _diceDataContainer.GetRandomFace(),AddDice,onRolledKey);
-            dice2.RollDice(rollDiceEvent.Number2, _diceDataContainer.GetRandomFace(),AddDice,onRolledKey);
+            dice1.RollDice(onRollDiceEvent.Number1, _diceDataContainer.GetRandomFace(),AddDice,onRolledKey);
+            dice2.RollDice(onRollDiceEvent.Number2, _diceDataContainer.GetRandomFace(),AddDice,onRolledKey);
 
             var rolledList = new List<Dice> { dice1, dice2 };
             
           
 
-            var rollData = new RollData(rollDiceEvent.Number1 + rollDiceEvent.Number2, rolledList);
+            var rollData = new RollData(onRollDiceEvent.Number1 + onRollDiceEvent.Number2, rolledList);
 
             _rolledDicesDictionary.Add(onRolledKey,rollData);
 

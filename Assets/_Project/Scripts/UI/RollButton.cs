@@ -79,7 +79,7 @@ namespace _Project.Scripts.UI
                 _rollButton.interactable = true;
             }));
 
-            EventBus<RollDiceEvent>.Publish(new RollDiceEvent
+            EventBus<OnRollDiceEvent>.Publish(new OnRollDiceEvent
             {
                 Number1 = number1,
                 Number2 = number2

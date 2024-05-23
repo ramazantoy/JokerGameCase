@@ -8,10 +8,7 @@ namespace _Project.Scripts.SaveSystem
 {
     public class SaveManager : MonoBehaviour
     {
-        [SerializeField] private GameSaveDataContainer _gameSaveDataContainer;
-
         [SerializeField] private List<SavableData> _savableDatas;
-        private GameSaveData GameSaveData => _gameSaveDataContainer.Data;
 
 
         private void Start()
@@ -44,8 +41,7 @@ namespace _Project.Scripts.SaveSystem
         private void OnApplicationFocus(bool hasFocus)
         {
             if (hasFocus) return;
-
-            GameSaveData.LastSessionTime = DateTime.Now.ToBinary().ToString();
+            
             Save();
 
 #if UNITY_EDITOR
@@ -55,7 +51,6 @@ namespace _Project.Scripts.SaveSystem
 
         private void OnApplicationQuit()
         {
-            GameSaveData.LastSessionTime = DateTime.Now.ToBinary().ToString();
             Save();
 
 #if UNITY_EDITOR

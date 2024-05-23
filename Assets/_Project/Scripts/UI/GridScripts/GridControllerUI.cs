@@ -35,11 +35,13 @@ namespace _Project.Scripts.UI.GridScripts
         private void OnChangePanel()
         {
             _panelGridTransform.DOScale(Vector3.one * 4f, .25f);
+            EventBus<OnPlayClickSoundEvent>.Publish(new OnPlayClickSoundEvent());
         }
 
         private void OnClosePanel()
         {
             _panelGridTransform.DOScale(Vector3.one, .25f);
+            EventBus<OnPlayClickSoundEvent>.Publish(new OnPlayClickSoundEvent());
         }
     }
 }

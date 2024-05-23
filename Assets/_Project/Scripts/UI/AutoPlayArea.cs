@@ -7,40 +7,41 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Random =UnityEngine.Random;
+using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.UI
 {
     public class AutoPlayArea : MonoBehaviour
     {
         private bool _isToggleOn = false;
-        [SerializeField]
-        private RectTransform _toggleTransform;
-        [SerializeField]
-        private Button _toggleButton;
-        [SerializeField]
-        private Button _rollButton;
-        
-        [SerializeField]
-        private TMP_InputField _moveAmountTextArea;
+        [SerializeField] private RectTransform _toggleTransform;
+        [SerializeField] private Button _toggleButton;
+        [SerializeField] private Button _rollButton;
+
+        [SerializeField] private TMP_InputField _moveAmountTextArea;
 
         private CancellationTokenSource _cancellationTokenSource;
 
         private void OnEnable()
         {
+            _moveAmountTextArea.onValueChanged.AddListener(delegate
+            {
+                EventBus<OnPlayClickSoundEvent>.Publish(new OnPlayClickSoundEvent());
+            });
             _toggleButton.onClick.AddListener(SetToggleButton);
         }
 
-     
 
         private void SetToggleButton()
         {
+            EventBus<OnPlayClickSoundEvent>.Publish(new OnPlayClickSoundEvent());
+
             _isToggleOn = !_isToggleOn;
 
             _toggleTransform.DOAnchorPosX(_isToggleOn ? 75f : -75f, .15f);
 
             _rollButton.interactable = !_isToggleOn;
-            
+
             EventBus<OnUpdateGameStateEvent>.Publish(new OnUpdateGameStateEvent
             {
                 newState = _isToggleOn ? GameState.Auto : GameState.Normal
@@ -55,55 +56,50 @@ namespace _Project.Scripts.UI
                     _cancellationTokenSource.Cancel();
                     _cancellationTokenSource.Dispose();
                 }
-                
-                
+
+
                 _cancellationTokenSource = new CancellationTokenSource();
-                
-                AutoMove(_cancellationTokenSource.Token,GetRollAmount()).Forget();
+
+                AutoMove(_cancellationTokenSource.Token, GetRollAmount()).Forget();
             }
             else
             {
                 _cancellationTokenSource?.Cancel();
             }
-
         }
 
         private int GetRollAmount()
         {
             var num = _moveAmountTextArea.text;
-     
+
 
             if (string.IsNullOrEmpty(num))
             {
                 return 5;
             }
-            
+
             return int.TryParse(num, out var parsedNum) ? parsedNum : Random.Range(3, 10);
-            
         }
 
-        private async UniTask AutoMove(CancellationToken token,int rollAmount)
+        private async UniTask AutoMove(CancellationToken token, int rollAmount)
         {
-      
             try
             {
                 for (var i = rollAmount; i > 0; i--)
                 {
                     token.ThrowIfCancellationRequested();
-                    
+
                     await UniTask.Delay(1500, cancellationToken: token);
-                    
+
                     RollDice();
 
                     _moveAmountTextArea.text = i.ToString();
-                    
-                
                 }
             }
             catch (OperationCanceledException)
             {
                 // Auto movement canceled
-              //  Debug.LogError("Auto Movement Canceled");
+                //  Debug.LogError("Auto Movement Canceled");
             }
             finally
             {
@@ -115,23 +111,22 @@ namespace _Project.Scripts.UI
         {
             var number1 = Random.Range(1, 7);
             var number2 = Random.Range(1, 7);
-            
-            EventBus<RollDiceEvent>.Publish(new RollDiceEvent
+
+            EventBus<OnRollDiceEvent>.Publish(new OnRollDiceEvent
             {
                 Number1 = number1,
                 Number2 = number2
             });
         }
-        
+
         private void OnAutoMoveCanceledOrCompleted()
         {
-         
             _isToggleOn = false;
             _toggleTransform.DOAnchorPosX(-75f, .15f);
             _rollButton.interactable = true;
             _moveAmountTextArea.interactable = true;
             _moveAmountTextArea.text = "";
-            
+
             EventBus<OnUpdateGameStateEvent>.Publish(new OnUpdateGameStateEvent
             {
                 newState = GameState.Normal

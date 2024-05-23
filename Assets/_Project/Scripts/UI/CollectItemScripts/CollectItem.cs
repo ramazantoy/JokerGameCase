@@ -24,7 +24,7 @@ namespace _Project.Scripts.UI.CollectItemScripts
 
         public void MoveToTarget(RectTransform target,Action<CollectItem> onComplete)
         {
-            transform.parent = target;
+            transform.SetParent(target);
             var moveTime = GameManager.GameState==GameState.Normal ? Random.Range(1f, 1.5f) : Random.Range(1f, 1.5f)/4f;
             transform.DOLocalMove(Vector3.zero, moveTime).OnComplete((() =>
             {

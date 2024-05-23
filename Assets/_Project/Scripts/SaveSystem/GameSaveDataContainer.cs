@@ -22,90 +22,28 @@ namespace _Project.Scripts.SaveSystem
     [System.Serializable]
     public class GameSaveData
     {
-        private int _earnMoney;
-        private int _earnGem;
-        private int _lastLevel;
-        private bool _noAds;
-        private string _lastSessionTime;
-        private bool _isVibrationOn;
         private bool _isMusicOn;
+        private bool _isSoundEffectsOn;
 
 
         public GameSaveData()
         {
-            _lastLevel = 1;
-            _isVibrationOn = true;
             _isMusicOn = true;
-            _earnMoney = 0;
-            _earnGem = 0;
-            _noAds = false;
+            _isSoundEffectsOn = true;
         }
-    
-    
-        public int EarnGem
-        {
-            get => _earnGem;
-            set
-            {
-                _earnGem = value;
-            }
-        }
-
-        public int EarnMoney
-        {
-            get => _earnMoney;
-            set
-            {
-                _earnMoney = value;
-
-            }
-        }
-
         public bool IsMusicOn
         {
             get => _isMusicOn;
-            set
-            {
-                _isMusicOn = value;
-                
-            }
-        }
-
-        public int LastLevel
-        {
-            get => _lastLevel;
-            set => _lastLevel = value;
-        }
-
-    
-
-        public bool NoAds
-        {
-            get => _noAds;
-            set
-            {
-                if (value)
-                {
-                }
-                _noAds = value;
-            }
-        }
-
-        public string LastSessionTime
-        {
-            get => _lastSessionTime;
-            set => _lastSessionTime = value;
+            set => _isMusicOn = value;
         }
         
-
-        public bool IsVibrationOn
+        public bool IsSoundEffectsOn
         {
-            get => _isVibrationOn;
-            set
-            {
-                _isVibrationOn = value;
-            }
+            get => _isSoundEffectsOn;
+            set => _isSoundEffectsOn= value;
         }
+
+        
     
     
     }
