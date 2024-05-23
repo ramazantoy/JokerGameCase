@@ -26,7 +26,10 @@ namespace _Project.Scripts.UI
         {
             _moveAmountTextArea.onValueChanged.AddListener(delegate
             {
-                EventBus<OnPlayClickSoundEvent>.Publish(new OnPlayClickSoundEvent());
+                if (_moveAmountTextArea.interactable)
+                {
+                    EventBus<OnPlayClickSoundEvent>.Publish(new OnPlayClickSoundEvent());
+                }
             });
             _toggleButton.onClick.AddListener(SetToggleButton);
         }
@@ -85,15 +88,18 @@ namespace _Project.Scripts.UI
         {
             try
             {
+                _moveAmountTextArea.text = rollAmount.ToString();
                 for (var i = rollAmount; i > 0; i--)
                 {
                     token.ThrowIfCancellationRequested();
-
-                    await UniTask.Delay(1500, cancellationToken: token);
-
+                    
                     RollDice();
 
                     _moveAmountTextArea.text = i.ToString();
+
+                    await UniTask.Delay(1500, cancellationToken: token);
+
+               
                 }
             }
             catch (OperationCanceledException)
