@@ -1,7 +1,10 @@
 using _Project.Scripts.GridSystem.Tile;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
+
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.Scripts.GridSystem
 {
@@ -35,7 +38,7 @@ namespace _Project.Scripts.GridSystem
         [Range(0,100)]
         public int WatermelonRewardTileRate;
     }
-    
+    #if UNITY_EDITOR
     [CustomEditor(typeof(GridBuilderDataContainer))]
     public class BuildSettingsEditor : Editor
     {
@@ -57,4 +60,6 @@ namespace _Project.Scripts.GridSystem
             }
         }
     }
+    #endif
+
 }

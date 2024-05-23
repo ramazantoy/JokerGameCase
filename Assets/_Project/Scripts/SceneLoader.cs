@@ -34,8 +34,9 @@ namespace _Project.Scripts
             
             await UniTask.WaitForSeconds(Random.Range(1, 3f)); 
             
+           
             await SceneManager.LoadSceneAsync((int)sceneType, LoadSceneMode.Additive);
-            
+            transform.GetChild(0).gameObject.SetActive(false);
         }
         
     }

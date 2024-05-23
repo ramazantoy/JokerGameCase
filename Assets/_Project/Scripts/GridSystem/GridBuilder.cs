@@ -12,24 +12,23 @@ namespace _Project.Scripts.GridSystem
 {
     public class GridBuilder : MonoBehaviour
     {
-         [SerializeField] private GridBuilderDataContainer _gridBuilderDataContainer;
+        [SerializeField] private GridBuilderDataContainer _gridBuilderDataContainer;
 
         [SerializeField] private Transform _envTilesParent;
         [SerializeField] private Transform _roadTilesParent;
 
         private TileBase[,] tiles;
 
-        [SerializeField]
-        private List<RoadTileBase> _roadTiles;
+        [SerializeField] private List<RoadTileBase> _roadTiles;
 
         private EventBinding<OnForceRebuildMapEvent> _onForceRebuildMapEvent;
 
         private void OnEnable()
         {
             GameFuncs.GetRoadTile += GetRoadTile;
-            
+
             _onForceRebuildMapEvent = new EventBinding<OnForceRebuildMapEvent>(ForceBuild);
-            
+
             EventBus<OnForceRebuildMapEvent>.Subscribe(_onForceRebuildMapEvent);
         }
 
@@ -47,7 +46,7 @@ namespace _Project.Scripts.GridSystem
         private void ForceBuild()
         {
             RemoveTiles();
-            
+
             if (_roadTiles == null || _roadTiles.Count <= 0)
             {
                 BuildMapOnEditor(false);
@@ -59,7 +58,6 @@ namespace _Project.Scripts.GridSystem
             }
 
             StartAnim().Forget();
-            
         }
 
         private async UniTaskVoid StartAnim()
@@ -77,20 +75,19 @@ namespace _Project.Scripts.GridSystem
                 await UniTask.WaitForSeconds(.025f);
             }
 
-            
-            EventBus<OnBoardReadyEvent>.Publish(new OnBoardReadyEvent());
 
+            EventBus<OnBoardReadyEvent>.Publish(new OnBoardReadyEvent());
         }
-        
+
         public void BuildMapOnEditor(bool useInEditor = true)
         {
             _roadTiles.Clear();
-            
+
             if (useInEditor)
             {
                 Debug.LogWarning("Map Building On Editor");
             }
-      
+
 
             var rowRolCount = _gridBuilderDataContainer.BuildSettings.RowColCount;
             tiles = new TileBase[rowRolCount, rowRolCount];
@@ -103,7 +100,15 @@ namespace _Project.Scripts.GridSystem
             {
                 for (int j = 0; j < rowRolCount; j++)
                 {
-                    var tile = useInEditor ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.EnvTilePref, _envTilesParent.transform) as TileBase : Instantiate(_gridBuilderDataContainer.EnvTilePref, _envTilesParent.transform);
+#if UNITY_EDITOR
+                    var tile = useInEditor
+                        ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.EnvTilePref,
+                            _envTilesParent.transform) as TileBase
+                        : Instantiate(_gridBuilderDataContainer.EnvTilePref, _envTilesParent.transform);
+#else
+                    var tile = Instantiate(_gridBuilderDataContainer.EnvTilePref, _envTilesParent.transform);
+#endif
+
                     tile.gameObject.name = $"EnvTile {i}_{j}";
                     tile.transform.position = startPos + new Vector3(i * tileSpacing, 0, j * tileSpacing);
                     tiles[i, j] = tile;
@@ -116,10 +121,11 @@ namespace _Project.Scripts.GridSystem
 
             for (int j = startIndex + 1; j < rowRolCount - startIndex; j++)
             {
-                if (startIndex== 1 && j == 1)
+                if (startIndex == 1 && j == 1)
                 {
                     continue;
                 }
+
                 SetRoadTile(startIndex, j, ref tileIndex, "", useInEditor);
             }
 
@@ -149,9 +155,11 @@ namespace _Project.Scripts.GridSystem
             var tile = InstantiateRewardTile(i, j, useInEditor);
 
             if (tile == null) return;
-            
+
             tile.gameObject.name = $"RoadTile {i}_{j}";
-            tile.transform.position = _gridBuilderDataContainer.BuildSettings.StartPos + new Vector3(i * _gridBuilderDataContainer.BuildSettings.TileSpacing, 0f, j * _gridBuilderDataContainer.BuildSettings.TileSpacing);
+            tile.transform.position = _gridBuilderDataContainer.BuildSettings.StartPos +
+                                      new Vector3(i * _gridBuilderDataContainer.BuildSettings.TileSpacing, 0f,
+                                          j * _gridBuilderDataContainer.BuildSettings.TileSpacing);
             tiles[i, j] = tile;
 
             if (!string.IsNullOrEmpty(text))
@@ -172,7 +180,14 @@ namespace _Project.Scripts.GridSystem
         {
             if (i == 1 && j == 1) // first tile
             {
-                return useInEditor ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.RoadTilePref, _roadTilesParent.transform) as TileBase : Instantiate(_gridBuilderDataContainer.RoadTilePref, _roadTilesParent.transform);
+#if UNITY_EDITOR
+                return useInEditor
+                    ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.RoadTilePref,
+                        _roadTilesParent.transform) as TileBase
+                    : Instantiate(_gridBuilderDataContainer.RoadTilePref, _roadTilesParent.transform);
+#else
+                  return Instantiate(_gridBuilderDataContainer.RoadTilePref, _roadTilesParent.transform);
+#endif
             }
 
             var randomValue = Random.Range(0, 100);
@@ -181,34 +196,67 @@ namespace _Project.Scripts.GridSystem
             cumulativeRate += _gridBuilderDataContainer.BuildSettings.NoRewardTileRate;
             if (randomValue < cumulativeRate)
             {
-                return useInEditor ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.RoadTilePref, _roadTilesParent.transform) as TileBase : Instantiate(_gridBuilderDataContainer.RoadTilePref, _roadTilesParent.transform);
+#if UNITY_EDITOR
+                return useInEditor
+                    ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.RoadTilePref,
+                        _roadTilesParent.transform) as TileBase
+                    : Instantiate(_gridBuilderDataContainer.RoadTilePref, _roadTilesParent.transform);
+#else
+                  return Instantiate(_gridBuilderDataContainer.RoadTilePref, _roadTilesParent.transform);
+#endif
             }
 
             cumulativeRate += _gridBuilderDataContainer.BuildSettings.BananaRewardTileRate;
             if (randomValue < cumulativeRate)
             {
-                return useInEditor ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.BananaRewardRoadTilePref, _roadTilesParent.transform) as TileBase : Instantiate(_gridBuilderDataContainer.BananaRewardRoadTilePref, _roadTilesParent.transform);
+#if UNITY_EDITOR
+                return useInEditor
+                    ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.BananaRewardRoadTilePref,
+                        _roadTilesParent.transform) as TileBase
+                    : Instantiate(_gridBuilderDataContainer.BananaRewardRoadTilePref, _roadTilesParent.transform);
+
+
+#else
+     return Instantiate(_gridBuilderDataContainer.BananaRewardRoadTilePref, _roadTilesParent.transform);
+#endif
             }
 
             cumulativeRate += _gridBuilderDataContainer.BuildSettings.AppleRewardTileRate;
             if (randomValue < cumulativeRate)
             {
-                return useInEditor ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.AppleRewardRoadTilePref, _roadTilesParent.transform) as TileBase : Instantiate(_gridBuilderDataContainer.AppleRewardRoadTilePref, _roadTilesParent.transform);
+#if UNITY_EDITOR
+                return useInEditor
+                    ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.AppleRewardRoadTilePref,
+                        _roadTilesParent.transform) as TileBase
+                    : Instantiate(_gridBuilderDataContainer.AppleRewardRoadTilePref, _roadTilesParent.transform);
+
+
+#else
+     return Instantiate(_gridBuilderDataContainer.AppleRewardRoadTilePref,_roadTilesParent.transform);
+#endif
             }
 
             cumulativeRate += _gridBuilderDataContainer.BuildSettings.WatermelonRewardTileRate;
             if (randomValue < cumulativeRate)
             {
-                return useInEditor ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.WatermelonRewardRoadTilePref, _roadTilesParent.transform) as TileBase : Instantiate(_gridBuilderDataContainer.WatermelonRewardRoadTilePref, _roadTilesParent.transform);
+#if UNITY_EDITOR
+                return useInEditor
+                    ? PrefabUtility.InstantiatePrefab(_gridBuilderDataContainer.WatermelonRewardRoadTilePref,
+                        _roadTilesParent.transform) as TileBase
+                    : Instantiate(_gridBuilderDataContainer.WatermelonRewardRoadTilePref, _roadTilesParent.transform);
+
+
+#else
+     return Instantiate(_gridBuilderDataContainer.WatermelonRewardRoadTilePref, _roadTilesParent.transform);
+#endif
             }
 
             return null;
         }
 
 
-        public void RemoveTiles(bool isEditor=true)
+        public void RemoveTiles(bool isEditor = true)
         {
-            
             var childList = new List<TileBase>(transform.GetComponentsInChildren<TileBase>());
             _roadTiles.Clear();
 
@@ -222,11 +270,9 @@ namespace _Project.Scripts.GridSystem
                 {
                     Destroy(child.gameObject);
                 }
-          
             }
         }
 
-    
 
         private RoadTileBase GetRoadTile(int index)
         {

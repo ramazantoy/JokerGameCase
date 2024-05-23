@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.SaveSystem
 {
+#if UNITY_EDITOR
     [CustomEditor(typeof(SavableData),true)]
     public class SavableDataEditor : UnityEditor.Editor
     {
@@ -18,4 +19,6 @@ namespace _Project.Scripts.SaveSystem
             }
         }
     }
+#endif
+   
 }

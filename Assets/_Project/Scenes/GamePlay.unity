@@ -1693,7 +1693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 100
+  m_ReferencePixelsPerUnit: 1
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 1
@@ -1702,7 +1702,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &2067067751
 Canvas:
   m_ObjectHideFlags: 0
@@ -30689,6 +30689,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2067067752}
     m_Modifications:
+    - target: {fileID: 590711996715614853, guid: f3da60c5ff8a5ca4593867067eb298bc, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1371624403463696900, guid: f3da60c5ff8a5ca4593867067eb298bc, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -30773,6 +30777,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mid_Up_Grid_Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 4272889071597957723, guid: f3da60c5ff8a5ca4593867067eb298bc, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5050869206110012354, guid: f3da60c5ff8a5ca4593867067eb298bc, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -30796,6 +30804,14 @@ PrefabInstance:
     - target: {fileID: 5050869206110012354, guid: f3da60c5ff8a5ca4593867067eb298bc, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5588375978886776760, guid: f3da60c5ff8a5ca4593867067eb298bc, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5588375978886776760, guid: f3da60c5ff8a5ca4593867067eb298bc, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6987075981448451677, guid: f3da60c5ff8a5ca4593867067eb298bc, type: 3}
       propertyPath: _textMeshes.Array.data[0]

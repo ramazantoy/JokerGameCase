@@ -1,8 +1,10 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 
 namespace _Project.Scripts.GridSystem
 {
+
     [CustomEditor(typeof(GridBuilder),true)]
     public class GridBuilderEditor : Editor
     {
@@ -23,4 +25,7 @@ namespace _Project.Scripts.GridSystem
             }
         }
     }
+
+
 }
+#endif
