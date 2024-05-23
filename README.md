@@ -11,7 +11,8 @@ The player can roll dice, choosing the values of the dice they want to roll. The
 - [Assets Used](#assets-used)
 - [Methods Used](#methods-used)
 - [Gameplay](#gameplay)
-- [Videos](#videos)
+- [Screenshots](#screenshots)
+- [Game Play Video](#game-play-video)
 
 ## Assets Used
 
@@ -58,5 +59,18 @@ The core gameplay elements are as follows:
   - Custom roll count: If a value is entered, the dice will roll that many times.
   - Default roll count: If no value is entered, the default is 5 automatic rolls.
 
-## Videos
+## Screenshots
+
+- **Grid Builder:**
+   - Adjustable map layout: The layout of the map can be configured from here.
+   - Reward density: Adjusts the frequency and density of rewards on the map.
+   - Map size: Changes the size of the map.
+   - ![gridControllerData](https://github.com/ramazantoy/JokerGameCase/assets/37442787/c6b2a008-980e-44d7-86f1-413425388c78)
+- **Grid Builder On Scene**
+   - Pre-game map preview: The map can be viewed using the grid builder tool in the editor without starting the game.
+   - ![gridControllerEditor](https://github.com/ramazantoy/JokerGameCase/assets/37442787/7e4ce326-6cdf-4e05-8eea-80c046742c14)
+
+## Game Play Video
+https://github.com/ramazantoy/JokerGameCase/assets/37442787/9f41268a-7215-4cd2-b05c-2b6f47403972
+
 
