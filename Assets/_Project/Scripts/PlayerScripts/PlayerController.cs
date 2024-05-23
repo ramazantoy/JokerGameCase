@@ -4,6 +4,7 @@ using _Project.Scripts.Events.EventBusScripts;
 using _Project.Scripts.Events.GameEvents;
 using _Project.Scripts.Funcs;
 using _Project.Scripts.GridSystem.Tile;
+using _Project.Scripts.SaveSystem;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -12,6 +13,10 @@ namespace _Project.Scripts.PlayerScripts
 {
     public class PlayerController : MonoBehaviour
     {
+
+        [SerializeField]
+        private CollectedItemSaveDataContainer _collectedItemSaveDataContainer;
+        
         private EventBinding<OnBoardReadyEvent> _onboardReadyEvent;
         private EventBinding<OnRollDoneEvent> _onRollDoneEvent;
 
@@ -85,7 +90,14 @@ namespace _Project.Scripts.PlayerScripts
                     GameFuncs.GetRoadTile(CurrentIndex).PlayParticle();
                     
                     await UniTask.WhenAll(transform.DOJump(targetPosition, 1.5f, 1, .35f/(GameManager.GameState == GameState.Normal ? 1f : 4f)).ToUniTask());
-                    _currentRoadTile.GiveRewards();
+
+                    var reward = _currentRoadTile.GiveRewards();
+
+                    if (reward.Item1 != CollectedItemType.None)
+                    {
+                        _collectedItemSaveDataContainer.Data.SaveDictionary[reward.Item1] += reward.Item2;
+                    }
+                    
 
                     transform.rotation = Quaternion.Euler(lookRotation);
                     _movementAmount--;

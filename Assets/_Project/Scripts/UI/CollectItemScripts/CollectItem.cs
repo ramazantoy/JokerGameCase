@@ -3,6 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.UI.CollectItemScripts
 {
@@ -24,7 +25,8 @@ namespace _Project.Scripts.UI.CollectItemScripts
         public void MoveToTarget(RectTransform target,Action<CollectItem> onComplete)
         {
             transform.parent = target;
-            transform.DOLocalMove(Vector3.zero, .35f).OnComplete((() =>
+            var moveTime = GameManager.GameState==GameState.Normal ? Random.Range(1f, 1.5f) : Random.Range(1f, 1.5f)/4f;
+            transform.DOLocalMove(Vector3.zero, moveTime).OnComplete((() =>
             {
                 onComplete?.Invoke(this);
             }));

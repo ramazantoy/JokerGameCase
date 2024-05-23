@@ -6,6 +6,7 @@ using _Project.Scripts.Funcs;
 using _Project.Scripts.LeonsExtensions;
 using _Project.Scripts.UI.CollectItemScripts;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _Project.Scripts
 {
@@ -43,12 +44,24 @@ namespace _Project.Scripts
             var type = onCollectedItemEvent.CollectedItemType;
 
             var collectedItemGroup = GameFuncs.GetCollectedItemGroup((int)type);
+
+            var count = Random.Range(3, 5);
+
+          var bornPoints=LeonsMath.GenerateRandomCirclePoints(onCollectedItemEvent.BornTransform, 2f, count, Camera.main);
+          
+          foreach (var bornPoint in bornPoints)
+          {
+              var item = GetItem();
             
-            var item = GetItem();
+              item.SetSprite((int)type);
+              item.gameObject.SetActive(true);
+              item.transform.position = bornPoint;
+              item.MoveToTarget(collectedItemGroup.TargetTransform,AddItem);
+          }
+           
             
-            item.SetSprite((int)type);
-            item.gameObject.SetActive(true);
-            item.MoveToTarget(collectedItemGroup.TargetTransform,AddItem);
+         
+      
         }
 
         private void AddItem(CollectItem collectItem)

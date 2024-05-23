@@ -39,6 +39,7 @@ namespace _Project.Scripts.SaveSystem
     }
     public enum CollectedItemType
     {
+        None=-1,
         Apple=0,
         Banana=1,
         Watermelon=2,

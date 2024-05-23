@@ -1197,6 +1197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7ab414ce043ba498dc0ccbd98db475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collectedItemSaveDataContainer: {fileID: 11400000, guid: 69fc2c001cbc5914692246b3b40cffd8, type: 2}
 --- !u!224 &1126425261 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1371624403463696900, guid: f3da60c5ff8a5ca4593867067eb298bc, type: 3}
@@ -31290,6 +31291,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4163304878160203981, guid: c1fc7bfaa6f721248b27452caf644906, type: 3}
+      propertyPath: _collectedItemType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4785327942713795736, guid: c1fc7bfaa6f721248b27452caf644906, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -31417,6 +31422,10 @@ PrefabInstance:
     - target: {fileID: 7118816709349089060, guid: c1fc7bfaa6f721248b27452caf644906, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455888384188336616, guid: c1fc7bfaa6f721248b27452caf644906, type: 3}
+      propertyPath: _collectedItemType
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

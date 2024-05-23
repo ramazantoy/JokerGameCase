@@ -2,14 +2,17 @@
 using _Project.Scripts.Events.EventBusScripts;
 using _Project.Scripts.Events.GameEvents;
 using _Project.Scripts.SaveSystem;
+using UnityEngine;
 
 namespace _Project.Scripts.GridSystem.Tile.RewardTiles
 {
     public class WatermelonRewardTile : RewardTile
     {
-        public override void GiveRewards()
+        public override (CollectedItemType, int)  GiveRewards()
         {
-            EventBus<OnCollectedItemEvent>.Publish(new OnCollectedItemEvent{CollectedItemType = CollectedItemType.Watermelon});
+            EventBus<OnCollectedItemEvent>.Publish(new OnCollectedItemEvent{CollectedItemType = CollectedItemType.Watermelon,BornTransform =transform});
+            return (CollectedItemType.Watermelon, RewardCount);
+
         }
     }
 

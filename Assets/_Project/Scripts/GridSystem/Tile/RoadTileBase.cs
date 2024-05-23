@@ -1,3 +1,4 @@
+using _Project.Scripts.SaveSystem;
 using TMPro;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ namespace _Project.Scripts.GridSystem.Tile
             _tileParticle.Play();
         }
 
-        public abstract void GiveRewards();
+        public abstract (CollectedItemType, int) GiveRewards();
 
     }
 }

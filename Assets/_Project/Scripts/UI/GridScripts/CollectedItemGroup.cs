@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.UI.GridScripts
 {
-    public class CollectedItemGroup : MonoBehaviour
+    public sealed class CollectedItemGroup : MonoBehaviour
     {
 
         [SerializeField]
@@ -15,7 +15,7 @@ namespace _Project.Scripts.UI.GridScripts
         
         [SerializeField]
         private TextMeshProUGUI _collectedAmountText;
-        
+        [SerializeField]
         private CollectedItemType _collectedItemType;
 
         private EventBinding<OnCollectedItemEvent> _onCollectedItemEvent;
@@ -25,12 +25,12 @@ namespace _Project.Scripts.UI.GridScripts
 
         public RectTransform TargetTransform => _targetTransform;
 
-        public virtual void Awake()
+        public void Awake()
         {
           SetText();
         }
 
-        public virtual void OnEnable()
+        public void OnEnable()
         {
 
             _onCollectedItemEvent = new EventBinding<OnCollectedItemEvent>(SetText);

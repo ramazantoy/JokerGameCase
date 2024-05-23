@@ -125,7 +125,7 @@ namespace _Project.Scripts.LeonsExtensions
             {
                 var angle = Random.Range(0, 2 * Mathf.PI);
                 var distance = Random.Range(0, radius);
-                var point = center.position +new Vector3(distance * Mathf.Cos(angle), 0, distance * Mathf.Sin(angle));
+                var point = center.position +Vector3.up*.25f+new Vector3(distance * Mathf.Cos(angle), 0, distance * Mathf.Sin(angle));
 
                 points.Add(camera.WorldToScreenPoint(point));
             }
