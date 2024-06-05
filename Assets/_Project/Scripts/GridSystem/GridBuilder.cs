@@ -81,6 +81,8 @@ namespace _Project.Scripts.GridSystem
 
         public void BuildMapOnEditor(bool useInEditor = true)
         {
+            _gridBuilderDataContainer.BuildSettings.AutoAdjustRates();//for fixing rate
+            
             _roadTiles.Clear();
 
             if (useInEditor)

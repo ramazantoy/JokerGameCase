@@ -37,8 +37,42 @@ namespace _Project.Scripts.GridSystem
         public int AppleRewardTileRate;
         [Range(0,100)]
         public int WatermelonRewardTileRate;
+
+
+        public int TotalRate=>NoRewardTileRate + BananaRewardTileRate +AppleRewardTileRate +WatermelonRewardTileRate;
+        public void AutoAdjustRates()
+        {
+          
+
+            if (TotalRate== 100) return;
+            
+            if (TotalRate== 0)
+            {
+                NoRewardTileRate = 25;
+                BananaRewardTileRate = 25;
+                AppleRewardTileRate = 25;
+                WatermelonRewardTileRate = 25;
+            }
+            else
+            {
+                var scaleFactor = 100.0f / TotalRate;
+                NoRewardTileRate = Mathf.RoundToInt(NoRewardTileRate * scaleFactor);
+                BananaRewardTileRate = Mathf.RoundToInt(BananaRewardTileRate * scaleFactor);
+                AppleRewardTileRate = Mathf.RoundToInt(AppleRewardTileRate * scaleFactor);
+                WatermelonRewardTileRate = Mathf.RoundToInt(WatermelonRewardTileRate * scaleFactor);
+            }
+        }
+        
+        public bool IsRatesCorrect(){
+            
+            return TotalRate==100;
+        }
+
     }
-    #if UNITY_EDITOR
+    
+ 
+
+#if UNITY_EDITOR
     [CustomEditor(typeof(GridBuilderDataContainer))]
     public class BuildSettingsEditor : Editor
     {
@@ -47,19 +81,19 @@ namespace _Project.Scripts.GridSystem
             EditorGUILayout.HelpBox("Total rate of all tiles must be %100 for build settings", MessageType.Info);
             DrawDefaultInspector();
         
-            
             var container = (GridBuilderDataContainer)target;
             
-            var buildSettings = container.BuildSettings;
-            
-            var totalRate = buildSettings.NoRewardTileRate + buildSettings.BananaRewardTileRate + buildSettings.AppleRewardTileRate + buildSettings.WatermelonRewardTileRate;
-            
-            if (totalRate != 100)
+            if (!container.BuildSettings.IsRatesCorrect())
             {
-                EditorGUILayout.HelpBox("Total rate of all tiles must be 100%. Current total: " +"%"+ totalRate , MessageType.Error);
+                EditorGUILayout.HelpBox("Total rate of all tiles must be 100%. Current total: %" + container.BuildSettings.TotalRate , MessageType.Error);
+
+                if (GUILayout.Button("Fix Rate"))
+                {
+                   container.BuildSettings.AutoAdjustRates();
+                    EditorUtility.SetDirty(container);
+                }
             }
         }
     }
-    #endif
-
+#endif
 }
